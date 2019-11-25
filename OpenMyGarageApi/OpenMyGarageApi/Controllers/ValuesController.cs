@@ -72,5 +72,26 @@ namespace OpenMyGarageApi.Controllers
                 return Ok(new { message = "Valaki itt van a kapunál." });
             }
         }
+
+        private void LogEntry(StoredPlates stored)
+        {
+            db.EntryLogs.Add(new EntryLog(){
+                Plate = stored.Plate,
+                Time = DateTime.Now,
+                Outcome = stored.Action
+            });
+            db.SaveChanges();
+        }
+
+        private void LogEntry(string plate)
+        {
+            db.EntryLogs.Add(new EntryLog()
+            {
+                Plate = plate,
+                Time = DateTime.Now,
+                Outcome = GateAction.NOTIFY
+            });
+            db.SaveChanges();
+        }
     }
 }
