@@ -44,5 +44,33 @@ namespace OpenMyGarageApi.Controllers
             db.StoredPlates.Add(plate);
             db.SaveChanges();
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("entry")]
+        public ActionResult<string> EntryAttempt([FromHeader] string plate)
+        {
+            var stored = db.StoredPlates.Where(x => x.Plate == plate).FirstOrDefault();
+            if (stored != null)
+            {
+                LogEntry(stored);
+                switch (stored.Action)
+                {
+                    case GateAction.OPEN:
+                        //open gate
+                        return Ok(new { message = $"Megérkezett {stored.Name}, kapu automatikusan kinyitva." });
+                    default:
+                    case GateAction.NOTIFY:
+                    case GateAction.REFUSE:
+                        //Firebase action here
+                        return Ok(new { message = $"Megérkezett {stored.Name}, további művelet szükséges." });
+                }
+            }
+            else
+            {
+                LogEntry(plate);
+                return Ok(new { message = "Valaki itt van a kapunál." });
+            }
+        }
     }
 }
