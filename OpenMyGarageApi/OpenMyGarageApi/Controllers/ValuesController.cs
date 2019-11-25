@@ -28,5 +28,12 @@ namespace OpenMyGarageApi.Controllers
         {
             return db.EntryLogs;
         }
+
+        [HttpGet]
+        [Route("storedplates")]
+        public ActionResult<IEnumerable<StoredPlates>> GetStoredPlates()
+        {
+            return db.StoredPlates;
+        }
     }
 }
