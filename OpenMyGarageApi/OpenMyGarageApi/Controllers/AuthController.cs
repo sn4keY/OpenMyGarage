@@ -46,7 +46,7 @@ namespace OpenMyGarageApi.Controllers
 
         [HttpPost]
         [Route("login")] // /login
-        public async Task<ActionResult> Login(LoginViewModel model)
+        public async Task<ActionResult> Login([FromBody] LoginViewModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
 
