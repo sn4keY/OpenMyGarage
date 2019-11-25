@@ -35,5 +35,14 @@ namespace OpenMyGarageApi.Controllers
         {
             return db.StoredPlates;
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("storedplates")]
+        public void AddStoredPlate([FromBody] StoredPlates plate)
+        {
+            db.StoredPlates.Add(plate);
+            db.SaveChanges();
+        }
     }
 }
