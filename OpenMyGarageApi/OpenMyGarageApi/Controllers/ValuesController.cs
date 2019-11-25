@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OpenMyGarageApi.Data;
 
 namespace OpenMyGarageApi.Controllers
 {
@@ -11,5 +12,11 @@ namespace OpenMyGarageApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly ApplicationDbContext db;
+
+        public ValuesController(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
     }
 }
