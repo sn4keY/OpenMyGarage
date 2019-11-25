@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using OpenMyGarageApi.Models;
 
 namespace OpenMyGarageApi.Data
 {
@@ -26,5 +27,9 @@ namespace OpenMyGarageApi.Data
 
             #endregion
         }
+
+        public DbSet<EntryLog> EntryLogs { get; set; }
+
+        public DbSet<StoredPlates> StoredPlates { get; set; }
     }
 }
