@@ -25,5 +25,23 @@ namespace OpenMyGarageApi.Controllers
             _userManager = userManager;
             _configuration = configuration;
         }
+
+        [HttpPost]
+        [Route("register")] // /register
+        public async Task<ActionResult> InsertUser([FromBody] RegisterViewModel model)
+        {
+            var user = new IdentityUser
+            {
+                Email = model.Email,
+                UserName = model.Email,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+            return Ok(new { Username = user.UserName });
+        }
     }
 }
