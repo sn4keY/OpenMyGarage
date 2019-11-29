@@ -8,29 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.norbertneudert.openmygarage.R
-import com.norbertneudert.openmygarage.ui.main.PlaceholderFragment
 
-class LogFragment : Fragment() {
+class LogTabFragment : Fragment() {
 
     companion object {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private const val ARG_SECTION_NUMBER = "section_number"
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        @JvmStatic
-        fun newInstance(sectionNumber: Int): LogFragment {
-            return LogFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_SECTION_NUMBER, sectionNumber)
-                }
-            }
-        }
+        fun newInstance() = LogTabFragment()
     }
 
     private lateinit var viewModel: LogViewModel
@@ -39,7 +21,7 @@ class LogFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.log_fragment, container, false)
+        return inflater.inflate(R.layout.logtab_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

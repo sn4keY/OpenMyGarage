@@ -8,29 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.norbertneudert.openmygarage.R
-import com.norbertneudert.openmygarage.ui.main.PlaceholderFragment
 
-class PlatesFragment : Fragment() {
+class PlatesTabFragment : Fragment() {
 
     companion object {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private const val ARG_SECTION_NUMBER = "section_number"
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        @JvmStatic
-        fun newInstance(sectionNumber: Int): PlatesFragment {
-            return PlatesFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_SECTION_NUMBER, sectionNumber)
-                }
-            }
-        }
+        fun newInstance() = PlatesTabFragment()
     }
 
     private lateinit var viewModel: PlatesViewModel
@@ -39,7 +21,7 @@ class PlatesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.plates_fragment, container, false)
+        return inflater.inflate(R.layout.platestab_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
