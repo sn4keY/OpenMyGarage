@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.norbertneudert.openmygarage.R
+import com.norbertneudert.openmygarage.ui.main.garageTab.GarageTabFragment
+import com.norbertneudert.openmygarage.ui.main.logTab.LogTabFragment
+import com.norbertneudert.openmygarage.ui.main.mainTab.MainTabFragment
+import com.norbertneudert.openmygarage.ui.main.platesTab.PlatesTabFragment
 
 private val TAB_TITLES = arrayOf(
         R.string.tab_text_1,
@@ -23,7 +27,12 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager)
     override fun getItem(position: Int): Fragment {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1)
+        when(position) {
+            2 -> return GarageTabFragment.newInstance()
+            3 -> return PlatesTabFragment.newInstance()
+            4 -> return LogTabFragment.newInstance()
+            else -> return MainTabFragment.newInstance()
+        }
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
