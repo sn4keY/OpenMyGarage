@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import java.security.KeyStore
+import java.util.*
 
 @Dao
 interface EntryLogDao {
@@ -15,4 +17,7 @@ interface EntryLogDao {
 
     @Insert
     fun insert(entryLog: EntryLog)
+
+    @Query("SELECT * FROM entry_log_table WHERE :dateFrom < date < :dateUntil ")
+    fun getEntryLogDate(dateFrom: Date, dateUntil: Date): LiveData<List<EntryLog>>
 }
