@@ -4,4 +4,5 @@
     <string name="tab_text_2">Kapu</string>
     <string name="tab_text_3">Kezelés</string>
     <string name="tab_text_4">Napló</string>
+    <string name="openButtonText">Open</string>
 </resources>
