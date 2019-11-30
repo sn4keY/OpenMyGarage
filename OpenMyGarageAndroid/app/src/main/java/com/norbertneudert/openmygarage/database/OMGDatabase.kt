@@ -7,7 +7,8 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [EntryLog::class, StoredPlates::class], version = 1, exportSchema = false)
 abstract class OMGDatabase : RoomDatabase() {
-    abstract val OMGDatabase : OMGDatabaseDao
+    abstract val EntryLogs : EntryLogDao
+    abstract val StoredPlates : StoredPlatesDao
 
     companion object{
         @Volatile
