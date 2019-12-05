@@ -8,14 +8,14 @@ import java.util.*
 @Entity(tableName = "entry_log_table")
 data class EntryLog (
     @PrimaryKey(autoGenerate = true)
-    var ID: Long = 0L,
+    var logId: Long = 0L,
+
+    @ColumnInfo(name = "entry_time")
+    val entryTime: Date = Calendar.getInstance().time,
 
     @ColumnInfo(name = "plate")
-    val Plate: String = "",
-
-    @ColumnInfo(name = "date")
-    val Time: Date = Calendar.getInstance().time,
+    var plate: String = "",
 
     @ColumnInfo(name = "outcome")
-    val Outcome: GateAction = GateAction.NOTIFY
+    var outcome: Outcome = Outcome.NOTIFY
 )

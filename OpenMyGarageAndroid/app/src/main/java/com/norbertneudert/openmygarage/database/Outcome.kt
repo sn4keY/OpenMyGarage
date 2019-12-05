@@ -1,6 +1,6 @@
 package com.norbertneudert.openmygarage.database
 
-enum class GateAction {
+enum class Outcome {
     OPEN,
     NOTIFY,
     REFUSE
