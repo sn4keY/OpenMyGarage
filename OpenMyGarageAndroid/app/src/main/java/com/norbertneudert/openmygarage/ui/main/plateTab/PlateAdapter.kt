@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.norbertneudert.openmygarage.apiservice.ApiHandlerStoredPlates
 import com.norbertneudert.openmygarage.database.StoredPlate
 import com.norbertneudert.openmygarage.databinding.PlatesItemViewBinding
 import kotlinx.coroutines.CoroutineScope
@@ -27,14 +28,23 @@ class PlateAdapter(val viewModel: PlateTabViewModel,private val supportFragmentM
         fun bind(item: StoredPlate, parent: Fragment, supportFragmentManager: FragmentManager, viewModel: PlateTabViewModel) {
             binding.namePlatesTw.text = item.name
             binding.platePlatesTw.text = item.plate
-            binding.outcomePlatesTw.text = item.outcome.toString()
+            binding.outcomePlatesTw.text = getOutcomeString(item.outcome)
             binding.editButton.setOnClickListener {
                 val editor = EditPlateFragment.newInstance(item)
                 editor.setTargetFragment(parent, 300)
                 editor.show(supportFragmentManager, "dialog")
             }
             binding.deleteButton.setOnClickListener {
-                viewModel.onDelete(item)
+                val apiHandler = ApiHandlerStoredPlates(viewModel.database)
+                apiHandler.deleteStoredPlate(item.plate)
+            }
+        }
+
+        private fun getOutcomeString(value: Int): String{
+            when(value){
+                0 -> return "OPEN"
+                2 -> return "REFUSE"
+                else -> return "NOTIFY"
             }
         }
 

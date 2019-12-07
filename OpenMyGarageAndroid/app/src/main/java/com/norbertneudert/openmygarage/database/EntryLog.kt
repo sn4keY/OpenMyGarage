@@ -21,5 +21,5 @@ data class EntryLog (
 
     @ColumnInfo(name = "outcome")
     @Json(name = "outcome")
-    var outcome: Outcome = Outcome.NOTIFY
+    var outcome: Int = 1
 )
