@@ -2,6 +2,7 @@ package com.norbertneudert.openmygarage.ui.main.logTab
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.norbertneudert.openmygarage.database.EntryLog
 import com.norbertneudert.openmygarage.database.EntryLogDao
 import com.norbertneudert.openmygarage.database.Outcome
