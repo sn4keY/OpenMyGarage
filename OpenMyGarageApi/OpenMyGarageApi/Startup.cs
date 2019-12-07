@@ -66,6 +66,7 @@ namespace OpenMyGarageApi
                     ValidateAudience = true,
                     ValidAudience = Configuration["Jwt:Site"],
                     ValidIssuer = Configuration["Jwt:Site"],
+                    RequireExpirationTime = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"]))
                 };
             });
