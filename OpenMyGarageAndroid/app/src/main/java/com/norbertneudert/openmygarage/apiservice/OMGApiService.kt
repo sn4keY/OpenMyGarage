@@ -33,7 +33,7 @@ interface OMGApiService {
     fun postStoredPlate(@Header("plateBefore") plateBefore: String, @Body storedPlate: StoredPlate) : Call<Void>
 
     @DELETE("storedplates")
-    fun deleteStoredPlate(@Body storedPlate: StoredPlate)
+    fun deleteStoredPlate(@Header("plate") plate: String) : Call<Void>
 }
 
 object OMGApi {

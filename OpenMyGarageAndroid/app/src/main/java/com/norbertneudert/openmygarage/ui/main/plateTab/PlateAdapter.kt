@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.norbertneudert.openmygarage.apiservice.ApiHandlerStoredPlates
 import com.norbertneudert.openmygarage.database.StoredPlate
 import com.norbertneudert.openmygarage.databinding.PlatesItemViewBinding
 import kotlinx.coroutines.CoroutineScope
@@ -34,7 +35,8 @@ class PlateAdapter(val viewModel: PlateTabViewModel,private val supportFragmentM
                 editor.show(supportFragmentManager, "dialog")
             }
             binding.deleteButton.setOnClickListener {
-                viewModel.onDelete(item)
+                val apiHandler = ApiHandlerStoredPlates(viewModel.database)
+                apiHandler.deleteStoredPlate(item.plate)
             }
         }
 

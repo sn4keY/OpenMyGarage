@@ -28,6 +28,20 @@ class ApiHandlerStoredPlates(private val storedplatesDB: StoredPlateDao) {
         })
         refreshDatabase()
     }
+
+    fun deleteStoredPlate(plate: String){
+        OMGApi.retrofitService.deleteStoredPlate(plate).enqueue(object: Callback<Void> {
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Log.i("ApiHandlerStoredPlates", t.message)
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                Log.i("ApiHandlerStoredPlates", response.message())
+            }
+        })
+        refreshDatabase()
+    }
+
     private fun refreshDatabase() {
         coroutineScope.launch {
             clearStoredPlates()
