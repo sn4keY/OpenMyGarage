@@ -10,7 +10,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 
 
-private const val BASE_URL = "http://10.0.2.2:44348/api/values/"
+private const val BASE_URL = "https://openmygarageapi.azurewebsites.net/api/values/"
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
