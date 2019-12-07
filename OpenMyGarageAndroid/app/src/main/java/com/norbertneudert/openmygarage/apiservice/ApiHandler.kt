@@ -15,6 +15,7 @@ class ApiHandler(private val entryLogsDB: EntryLogDao) {
 
     fun refreshDatabase() {
         coroutineScope.launch {
+            clearEntryLogs()
             var getEntryLogsDeferred = OMGApi.retrofitService.getEntryLogs()
             try {
                 var listResult = getEntryLogsDeferred.await()
@@ -28,7 +29,6 @@ class ApiHandler(private val entryLogsDB: EntryLogDao) {
     }
 
     private suspend fun populateEntryLogs(entryLogs: List<EntryLog>){
-        clearEntryLogs()
         for (log in entryLogs) {
             withContext(Dispatchers.IO) {
                 entryLogsDB.insert(log)
