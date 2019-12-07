@@ -82,5 +82,18 @@ namespace OpenMyGarageApi.Controllers
             }
             return Unauthorized();
         }
+
+        private string GetHighestRole(IList<string> roles)
+        {
+            if (roles.Contains("RaspberryPi"))
+            {
+                return "RaspberryPi";
+            }
+            else if (roles.Contains("Admin"))
+            {
+                return "Admin";
+            }
+            return "User";
+        }
     }
 }
