@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 
 import com.norbertneudert.openmygarage.R
@@ -52,9 +52,7 @@ class PlateTabFragment : Fragment(), EditPlateFragment.EditPlateDialogListener {
         })
 
         binding.fabAdd.setOnClickListener {
-            val editor = EditPlateFragment.newInstance(StoredPlate())
-            editor.setTargetFragment(this,300)
-            editor.show(activity.supportFragmentManager, "dialog")
+            showEditor(activity)
         }
 
         return binding.root
@@ -64,5 +62,11 @@ class PlateTabFragment : Fragment(), EditPlateFragment.EditPlateDialogListener {
         Log.i("PlateTabFragment", "onFinishedEditing called")
         Log.i("PlateTabFragment", storedPlate.plateId.toString())
         viewModel.onEdit(storedPlate)
+    }
+
+    private fun showEditor(activity: FragmentActivity){
+        val editor = EditPlateFragment.newInstance(StoredPlate())
+        editor.setTargetFragment(this,300)
+        editor.show(activity.supportFragmentManager, "dialog")
     }
 }
