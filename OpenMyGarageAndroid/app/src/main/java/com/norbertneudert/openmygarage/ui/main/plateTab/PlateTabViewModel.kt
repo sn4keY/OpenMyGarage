@@ -2,9 +2,6 @@ package com.norbertneudert.openmygarage.ui.main.plateTab
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.norbertneudert.openmygarage.database.Outcome
 import com.norbertneudert.openmygarage.database.StoredPlate
 import com.norbertneudert.openmygarage.database.StoredPlateDao
 import kotlinx.coroutines.*

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.norbertneudert.openmygarage.R
-import com.norbertneudert.openmygarage.database.Outcome
 import com.norbertneudert.openmygarage.database.StoredPlate
 import com.norbertneudert.openmygarage.databinding.EditPlateFragmentBinding
 
