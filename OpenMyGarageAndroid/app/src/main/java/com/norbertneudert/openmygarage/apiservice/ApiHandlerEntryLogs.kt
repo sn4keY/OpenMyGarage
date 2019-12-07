@@ -3,9 +3,11 @@ package com.norbertneudert.openmygarage.apiservice
 import android.util.Log
 import com.norbertneudert.openmygarage.database.EntryLog
 import com.norbertneudert.openmygarage.database.EntryLogDao
+import com.norbertneudert.openmygarage.database.StoredPlate
+import com.norbertneudert.openmygarage.database.StoredPlateDao
 import kotlinx.coroutines.*
 
-class ApiHandler(private val entryLogsDB: EntryLogDao) {
+class ApiHandlerEntryLogs(private val entryLogsDB: EntryLogDao) {
     private var handlerJob = Job()
     private val coroutineScope = CoroutineScope(handlerJob + Dispatchers.Main)
 
@@ -20,15 +22,13 @@ class ApiHandler(private val entryLogsDB: EntryLogDao) {
             try {
                 var listResult = getEntryLogsDeferred.await()
                 populateEntryLogs(listResult)
-                Log.i("ApiHandler", listResult[0].plate)
-
             } catch (e: Exception) {
-                Log.i("ApiHandler", e.message)
+                Log.i("ApiHandler", "Refresh entryLogs failed: " + e.message)
             }
         }
     }
 
-    private suspend fun populateEntryLogs(entryLogs: List<EntryLog>){
+    private suspend fun populateEntryLogs(entryLogs: List<EntryLog>) {
         for (log in entryLogs) {
             withContext(Dispatchers.IO) {
                 entryLogsDB.insert(log)
@@ -36,7 +36,7 @@ class ApiHandler(private val entryLogsDB: EntryLogDao) {
         }
     }
 
-    private suspend fun clearEntryLogs(){
+    private suspend fun clearEntryLogs() {
         withContext(Dispatchers.IO) {
             entryLogsDB.clear()
         }
