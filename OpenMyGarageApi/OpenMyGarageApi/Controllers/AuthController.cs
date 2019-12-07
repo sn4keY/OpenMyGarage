@@ -53,7 +53,7 @@ namespace OpenMyGarageApi.Controllers
             if (user != null)
             {
                 var roles = await _userManager.GetRolesAsync(user);
-                string role = roles.Contains("Admin") ? "Admin" : "User";
+                string role = GetHighestRole(roles);
                 if (await _userManager.CheckPasswordAsync(user, model.Password))
                 {
                     var claim = new[] {
@@ -65,13 +65,25 @@ namespace OpenMyGarageApi.Controllers
 
                     int expiryInMinutes = Convert.ToInt32(_configuration["Jwt:ExpiryInMinutes"]);
 
-                    var token = new JwtSecurityToken(
-                      issuer: _configuration["Jwt:Site"],
-                      audience: _configuration["Jwt:Site"],
-                      claims: claim,
-                      expires: DateTime.Now.AddMinutes(60),
-                      signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256)
-                    );
+                    JwtSecurityToken token;
+
+                    if (role == "RaspberryPi")
+                    {
+                        token = new JwtSecurityToken(
+                            issuer: _configuration["Jwt:Site"],
+                            audience: _configuration["Jwt:Site"],
+                            claims: claim,
+                            signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256));
+                    }
+                    else
+                    {
+                        token = new JwtSecurityToken(
+                            issuer: _configuration["Jwt:Site"],
+                            audience: _configuration["Jwt:Site"],
+                            claims: claim,
+                            expires: DateTime.Now.AddMinutes(60),
+                            signingCredentials: new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256));
+                    }
                     return Ok(
                       new
                       {
