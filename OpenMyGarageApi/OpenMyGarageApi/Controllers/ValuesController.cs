@@ -41,9 +41,9 @@ namespace OpenMyGarageApi.Controllers
         //[Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("storedplates")]
-        public void AddStoredPlate([FromBody] StoredPlates plate)
+        public void AddStoredPlate([FromBody] StoredPlates plate, [FromHeader] string plateBefore)
         {
-            var edit = db.StoredPlates.Where(x => x.Plate == plate.Plate);
+            var edit = db.StoredPlates.Where(x => x.Plate == plateBefore);
             if (edit.Count() != 0)
             {
                 db.StoredPlates.Remove(edit.FirstOrDefault());
