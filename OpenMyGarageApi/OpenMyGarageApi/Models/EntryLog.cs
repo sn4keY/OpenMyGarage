@@ -15,7 +15,7 @@ namespace OpenMyGarageApi.Models
         public string Plate { get; set; }
 
         [Required]
-        public DateTime Time { get; set; }
+        public long Time { get; set; }
 
         [Required]
         public GateAction Outcome { get; set; }
