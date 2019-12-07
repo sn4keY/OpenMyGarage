@@ -22,13 +22,14 @@ class LogTabFragment : Fragment() {
 
     private lateinit var viewModel: LogTabViewModel
     private lateinit var binding: LogTabFragmentBinding
+    private lateinit var apiHandler: ApiHandler
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.log_tab_fragment, container, false)
 
         val application = requireNotNull(this.activity).application
         val dataSource = OMGDatabase.getInstance(application).entryLog
-        val apiHandler = ApiHandler(dataSource)
+        apiHandler = ApiHandler(dataSource)
         val viewModelFactory = LogTabViewModelFactory(dataSource, application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LogTabViewModel::class.java)
 
@@ -44,6 +45,15 @@ class LogTabFragment : Fragment() {
             }
         })
 
+        binding.refreshLayout.setOnRefreshListener {
+            refreshDatabase()
+        }
+
         return binding.root
+    }
+
+    private fun refreshDatabase() {
+        apiHandler.refreshDatabase()
+        binding.refreshLayout.isRefreshing = false
     }
 }
