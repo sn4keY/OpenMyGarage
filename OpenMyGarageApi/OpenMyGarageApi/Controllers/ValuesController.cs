@@ -38,11 +38,17 @@ namespace OpenMyGarageApi.Controllers
             return db.StoredPlates;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("storedplates")]
         public void AddStoredPlate([FromBody] StoredPlates plate)
         {
+            var edit = db.StoredPlates.Where(x => x.Plate == plate.Plate);
+            if (edit.Count() != 0)
+            {
+                db.StoredPlates.Remove(edit.FirstOrDefault());
+            }
+
             db.StoredPlates.Add(plate);
             db.SaveChanges();
         }
@@ -55,6 +61,7 @@ namespace OpenMyGarageApi.Controllers
             db.StoredPlates.Remove(delete);
             db.SaveChanges();
         }
+
         [Authorize(Roles = "RaspberryPi")]
         [HttpPost]
         [Route("entry")]
