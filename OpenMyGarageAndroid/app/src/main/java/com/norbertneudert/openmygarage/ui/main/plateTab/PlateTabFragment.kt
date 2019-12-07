@@ -56,11 +56,11 @@ class PlateTabFragment : Fragment(), EditPlateFragment.EditPlateDialogListener {
         return binding.root
     }
 
-    override fun onFinishedEditing(storedPlate: StoredPlate) {
+    override fun onFinishedEditing(storedPlate: StoredPlate, plateBefore: String) {
         Log.i("PlateTabFragment", "onFinishedEditing called")
         Log.i("PlateTabFragment", storedPlate.plateId.toString())
-        viewModel.onEdit(storedPlate)
-        //apiHandler.postStoredPlate(storedPlate)
+        //viewModel.onEdit(storedPlate)
+        apiHandler.postStoredPlate(storedPlate, plateBefore)
     }
 
     private fun showEditor(activity: FragmentActivity){

@@ -6,12 +6,10 @@ import com.norbertneudert.openmygarage.database.StoredPlate
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 private const val BASE_URL = "https://openmygarageapi.azurewebsites.net/api/values/"
@@ -32,7 +30,7 @@ interface OMGApiService {
     fun getStoredPlates() : Deferred<List<StoredPlate>>
 
     @POST("storedplates")
-    fun postStoredPlate(@Body storedPlate: StoredPlate)
+    fun postStoredPlate(@Header("plateBefore") plateBefore: String, @Body storedPlate: StoredPlate) : Call<Void>
 
     @DELETE("storedplates")
     fun deleteStoredPlate(@Body storedPlate: StoredPlate)

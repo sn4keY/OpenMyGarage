@@ -16,7 +16,7 @@ class EditPlateFragment(var storedPlate: StoredPlate) : DialogFragment() {
     }
 
     interface EditPlateDialogListener {
-        fun onFinishedEditing(storedPlate: StoredPlate)
+        fun onFinishedEditing(storedPlate: StoredPlate, plateBefore: String = "")
     }
 
     private lateinit var binding: EditPlateFragmentBinding
@@ -40,7 +40,7 @@ class EditPlateFragment(var storedPlate: StoredPlate) : DialogFragment() {
                 R.id.edit_plate_rb_refuse -> 2
                 else -> 1
             }
-            listener.onFinishedEditing(StoredPlate(plateId = storedPlate.plateId,name = name, plate = plate, outcome = outcome))
+            listener.onFinishedEditing(StoredPlate(plateId = storedPlate.plateId,name = name, plate = plate, outcome = outcome), storedPlate.plate)
             dismiss()
         }
 
