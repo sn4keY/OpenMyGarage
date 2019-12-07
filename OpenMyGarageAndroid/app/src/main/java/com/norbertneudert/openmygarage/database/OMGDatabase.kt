@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(entities = [EntryLog::class, StoredPlate::class], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
 abstract class OMGDatabase : RoomDatabase() {
     abstract val entryLog : EntryLogDao
     abstract val storedPlate : StoredPlateDao
