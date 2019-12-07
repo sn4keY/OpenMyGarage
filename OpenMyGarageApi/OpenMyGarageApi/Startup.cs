@@ -70,6 +70,16 @@ namespace OpenMyGarageApi
                 };
             });
 
+            services.AddCors(c =>
+            {
+                c.AddPolicy("Cors", options =>
+                {
+                    options.AllowAnyOrigin();
+                    options.AllowAnyMethod();
+                    options.AllowAnyHeader();
+                });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -86,6 +96,12 @@ namespace OpenMyGarageApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
 
             app.UseAuthentication();
             app.UseMvc();
