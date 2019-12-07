@@ -40,31 +40,4 @@ class PlateTabViewModel(val database: StoredPlateDao, application: Application) 
             database.remove(storedPlate)
         }
     }
-
-    fun onClear(){
-        uiScope.launch {
-            clear()
-        }
-    }
-
-    private suspend fun clear() {
-        withContext(Dispatchers.IO) {
-            database.clear()
-        }
-    }
-
-    fun onPopulate() {
-        uiScope.launch {
-            populateEntryLogs()
-        }
-    }
-
-    private suspend fun populateEntryLogs() {
-        withContext(Dispatchers.IO) {
-            database.insert(StoredPlate(name="Norbi", plate = "ABC-123", outcome = 0))
-            database.insert(StoredPlate(name = "Joci", plate = "XYZ-123", outcome = 1))
-            database.insert(StoredPlate(name = "Laci", plate = "UJA-462", outcome = 2))
-            database.insert(StoredPlate(name = "Gabi", plate = "IKA-515"))
-        }
-    }
 }
