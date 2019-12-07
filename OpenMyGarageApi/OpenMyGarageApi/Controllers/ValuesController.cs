@@ -47,6 +47,14 @@ namespace OpenMyGarageApi.Controllers
             db.SaveChanges();
         }
 
+        [HttpDelete]
+        [Route("storedplates")]
+        public void DeleteStoredPlate([FromHeader] string plate)
+        {
+            var delete = db.StoredPlates.Where(x => x.Plate == plate).FirstOrDefault();
+            db.StoredPlates.Remove(delete);
+            db.SaveChanges();
+        }
         [Authorize(Roles = "RaspberryPi")]
         [HttpPost]
         [Route("entry")]
