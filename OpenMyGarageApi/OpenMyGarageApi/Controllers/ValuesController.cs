@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OpenMyGarageApi.Data;
@@ -10,9 +11,10 @@ using OpenMyGarageApi.Models;
 
 namespace OpenMyGarageApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("Cors")]
     public class ValuesController : ControllerBase
     {
         private readonly ApplicationDbContext db;
@@ -45,7 +47,7 @@ namespace OpenMyGarageApi.Controllers
             db.SaveChanges();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "RaspberryPi")]
         [HttpPost]
         [Route("entry")]
         public ActionResult<string> EntryAttempt([FromHeader] string plate)
@@ -77,7 +79,7 @@ namespace OpenMyGarageApi.Controllers
         {
             db.EntryLogs.Add(new EntryLog(){
                 Plate = stored.Plate,
-                Time = DateTime.Now,
+                Time = DateTime.Now.Ticks,
                 Outcome = stored.Action
             });
             db.SaveChanges();
@@ -88,7 +90,7 @@ namespace OpenMyGarageApi.Controllers
             db.EntryLogs.Add(new EntryLog()
             {
                 Plate = plate,
-                Time = DateTime.Now,
+                Time = DateTime.Now.Ticks,
                 Outcome = GateAction.NOTIFY
             });
             db.SaveChanges();
