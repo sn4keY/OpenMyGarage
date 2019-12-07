@@ -47,7 +47,7 @@ namespace OpenMyGarageApi.Controllers
             db.SaveChanges();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "RaspberryPi")]
         [HttpPost]
         [Route("entry")]
         public ActionResult<string> EntryAttempt([FromHeader] string plate)
