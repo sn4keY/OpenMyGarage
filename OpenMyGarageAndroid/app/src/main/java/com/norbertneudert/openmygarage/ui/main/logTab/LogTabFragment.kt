@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 
 import com.norbertneudert.openmygarage.R
-import com.norbertneudert.openmygarage.apiservice.ApiHandler
+import com.norbertneudert.openmygarage.apiservice.ApiHandlerEntryLogs
 import com.norbertneudert.openmygarage.database.OMGDatabase
 import com.norbertneudert.openmygarage.databinding.LogTabFragmentBinding
 
@@ -22,14 +22,14 @@ class LogTabFragment : Fragment() {
 
     private lateinit var viewModel: LogTabViewModel
     private lateinit var binding: LogTabFragmentBinding
-    private lateinit var apiHandler: ApiHandler
+    private lateinit var apiHandler: ApiHandlerEntryLogs
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.log_tab_fragment, container, false)
 
         val application = requireNotNull(this.activity).application
         val dataSource = OMGDatabase.getInstance(application).entryLog
-        apiHandler = ApiHandler(dataSource)
+        apiHandler = ApiHandlerEntryLogs(dataSource)
         val viewModelFactory = LogTabViewModelFactory(dataSource, application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LogTabViewModel::class.java)
 
