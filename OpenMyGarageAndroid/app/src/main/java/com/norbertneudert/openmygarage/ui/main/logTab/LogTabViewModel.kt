@@ -39,14 +39,14 @@ class LogTabViewModel(val database: EntryLogDao, application: Application) : And
 
     private suspend fun populateEntryLogs() {
         withContext(Dispatchers.IO) {
-            database.insert(EntryLog(plate = "ABC-123", outcome = Outcome.OPEN))
+            database.insert(EntryLog(plate = "ABC-123", outcome = 0))
             database.insert(EntryLog(plate = "XYZ-123"))
             database.insert(EntryLog(plate = "UJA-462"))
-            database.insert(EntryLog(plate = "PIS-823", outcome = Outcome.OPEN))
+            database.insert(EntryLog(plate = "PIS-823", outcome = 0))
             database.insert(EntryLog(plate = "BSR-312"))
             database.insert(EntryLog(plate = "ZAK-012"))
             database.insert(EntryLog(plate = "MKA-721"))
-            database.insert(EntryLog(plate = "LUC-666", outcome = Outcome.OPEN))
+            database.insert(EntryLog(plate = "LUC-666", outcome = 0))
             database.insert(EntryLog(plate = "GOD-420"))
             database.insert(EntryLog(plate = "UAE-999"))
         }

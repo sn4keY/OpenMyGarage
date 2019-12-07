@@ -16,5 +16,5 @@ data class StoredPlate (
     var name: String = "",
 
     @ColumnInfo(name = "outcome")
-    var outcome: Outcome = Outcome.NOTIFY
+    var outcome: Int = 1
 )

@@ -32,4 +32,12 @@ class EntryLogAdapter : RecyclerView.Adapter<LogsViewHolder>() {
         val view = layoutInflater.inflate(R.layout.logs_item_view, parent, false)
         return LogsViewHolder(view)
     }
+
+    private fun getOutcomeString(value: Int): String{
+        when(value){
+            0 -> return "OPEN"
+            2 -> return "REFUSE"
+            else -> return "NOTIFY"
+        }
+    }
 }

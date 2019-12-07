@@ -27,8 +27,8 @@ class EditPlateFragment(var storedPlate: StoredPlate) : DialogFragment() {
         binding.editNameIt.setText(storedPlate.name)
         binding.editPlateIt.setText(storedPlate.plate)
         binding.editPlateOutcome.check(when(storedPlate.outcome) {
-            Outcome.OPEN -> R.id.edit_plate_rb_open
-            Outcome.REFUSE -> R.id.edit_plate_rb_refuse
+            0 -> R.id.edit_plate_rb_open
+            2 -> R.id.edit_plate_rb_refuse
             else -> R.id.edit_plate_rb_notify
         })
 
@@ -37,9 +37,9 @@ class EditPlateFragment(var storedPlate: StoredPlate) : DialogFragment() {
             val name = binding.editNameIt.text.toString()
             val plate = binding.editPlateIt.text.toString()
             val outcome = when(binding.editPlateOutcome.checkedRadioButtonId) {
-                R.id.edit_plate_rb_open -> Outcome.OPEN
-                R.id.edit_plate_rb_refuse -> Outcome.REFUSE
-                else -> Outcome.NOTIFY
+                R.id.edit_plate_rb_open -> 0
+                R.id.edit_plate_rb_refuse -> 2
+                else -> 1
             }
             listener.onFinishedEditing(StoredPlate(plateId = storedPlate.plateId,name = name, plate = plate, outcome = outcome))
             dismiss()

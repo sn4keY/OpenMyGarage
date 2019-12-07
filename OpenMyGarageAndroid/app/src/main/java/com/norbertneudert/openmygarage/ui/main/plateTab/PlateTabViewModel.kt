@@ -64,9 +64,9 @@ class PlateTabViewModel(val database: StoredPlateDao, application: Application) 
 
     private suspend fun populateEntryLogs() {
         withContext(Dispatchers.IO) {
-            database.insert(StoredPlate(name="Norbi", plate = "ABC-123", outcome = Outcome.OPEN))
-            database.insert(StoredPlate(name = "Joci", plate = "XYZ-123", outcome = Outcome.NOTIFY))
-            database.insert(StoredPlate(name = "Laci", plate = "UJA-462", outcome = Outcome.REFUSE))
+            database.insert(StoredPlate(name="Norbi", plate = "ABC-123", outcome = 0))
+            database.insert(StoredPlate(name = "Joci", plate = "XYZ-123", outcome = 1))
+            database.insert(StoredPlate(name = "Laci", plate = "UJA-462", outcome = 2))
             database.insert(StoredPlate(name = "Gabi", plate = "IKA-515"))
         }
     }

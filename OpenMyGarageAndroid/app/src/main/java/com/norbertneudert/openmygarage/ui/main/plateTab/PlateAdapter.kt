@@ -27,7 +27,7 @@ class PlateAdapter(val viewModel: PlateTabViewModel,private val supportFragmentM
         fun bind(item: StoredPlate, parent: Fragment, supportFragmentManager: FragmentManager, viewModel: PlateTabViewModel) {
             binding.namePlatesTw.text = item.name
             binding.platePlatesTw.text = item.plate
-            binding.outcomePlatesTw.text = item.outcome.toString()
+            binding.outcomePlatesTw.text = getOutcomeString(item.outcome)
             binding.editButton.setOnClickListener {
                 val editor = EditPlateFragment.newInstance(item)
                 editor.setTargetFragment(parent, 300)
@@ -35,6 +35,14 @@ class PlateAdapter(val viewModel: PlateTabViewModel,private val supportFragmentM
             }
             binding.deleteButton.setOnClickListener {
                 viewModel.onDelete(item)
+            }
+        }
+
+        private fun getOutcomeString(value: Int): String{
+            when(value){
+                0 -> return "OPEN"
+                2 -> return "REFUSE"
+                else -> return "NOTIFY"
             }
         }
 
