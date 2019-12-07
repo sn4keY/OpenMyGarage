@@ -12,7 +12,7 @@ interface EntryLogDao {
     fun getEntryLogs(): LiveData<List<EntryLog>>
 
     @Query("SELECT * FROM entry_log_table WHERE :dateFrom < entry_time < :dateUntil ORDER BY entry_time DESC")
-    fun getEntryLogsBetween(dateFrom: Date, dateUntil: Date): LiveData<List<EntryLog>>
+    fun getEntryLogsBetween(dateFrom: Long, dateUntil: Long): LiveData<List<EntryLog>>
 
     @Query("SELECT * FROM entry_log_table ORDER BY entry_time DESC LIMIT 5")
     fun getEntryLogsLimited() : LiveData<List<EntryLog>>
