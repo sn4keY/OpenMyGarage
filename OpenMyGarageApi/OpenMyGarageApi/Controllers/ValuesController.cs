@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OpenMyGarageApi.Data;
@@ -10,9 +11,10 @@ using OpenMyGarageApi.Models;
 
 namespace OpenMyGarageApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("Cors")]
     public class ValuesController : ControllerBase
     {
         private readonly ApplicationDbContext db;
@@ -36,16 +38,31 @@ namespace OpenMyGarageApi.Controllers
             return db.StoredPlates;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("storedplates")]
-        public void AddStoredPlate([FromBody] StoredPlates plate)
+        public void AddStoredPlate([FromBody] StoredPlates plate, [FromHeader] string plateBefore)
         {
+            var edit = db.StoredPlates.Where(x => x.Plate == plateBefore);
+            if (edit.Count() != 0)
+            {
+                db.StoredPlates.Remove(edit.FirstOrDefault());
+            }
+
             db.StoredPlates.Add(plate);
             db.SaveChanges();
         }
 
-        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        [Route("storedplates")]
+        public void DeleteStoredPlate([FromHeader] string plate)
+        {
+            var delete = db.StoredPlates.Where(x => x.Plate == plate).FirstOrDefault();
+            db.StoredPlates.Remove(delete);
+            db.SaveChanges();
+        }
+
+        [Authorize(Roles = "RaspberryPi")]
         [HttpPost]
         [Route("entry")]
         public ActionResult<string> EntryAttempt([FromHeader] string plate)
@@ -77,7 +94,7 @@ namespace OpenMyGarageApi.Controllers
         {
             db.EntryLogs.Add(new EntryLog(){
                 Plate = stored.Plate,
-                Time = DateTime.Now,
+                Time = DateTime.Now.Ticks,
                 Outcome = stored.Action
             });
             db.SaveChanges();
@@ -88,7 +105,7 @@ namespace OpenMyGarageApi.Controllers
             db.EntryLogs.Add(new EntryLog()
             {
                 Plate = plate,
-                Time = DateTime.Now,
+                Time = DateTime.Now.Ticks,
                 Outcome = GateAction.NOTIFY
             });
             db.SaveChanges();

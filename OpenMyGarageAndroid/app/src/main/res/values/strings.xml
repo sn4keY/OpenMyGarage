@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">OpenMyGarage</string>
+    <string name="tab_text_1">Főoldal</string>
+    <string name="tab_text_2">Napló</string>
+    <string name="tab_text_3">Rendszámok</string>
+    <string name="edit_name_it_Nickname">Nickname</string>
+    <string name="edit_plate_it_Plate">Plate</string>
+    <string name="edit_outcome_tw_Outcome">Outcome:</string>
+    <string name="edit_plate_tw_Plate">Plate:</string>
+    <string name="edit_name_tw_Nickname">Nickname:</string>
+    <string name="edit_outcome_it_Outcome">Outcome</string>
+    <string name="edit_plate_btn_Done">Done</string>
+    <string name="edit_plate_radio_NOTIFY">NOTIFY</string>
+    <string name="edit_plate_radio_OPEN">OPEN</string>
+    <string name="edit_plate_REFUSE">REFUSE</string>
+</resources>

@@ -66,8 +66,19 @@ namespace OpenMyGarageApi
                     ValidateAudience = true,
                     ValidAudience = Configuration["Jwt:Site"],
                     ValidIssuer = Configuration["Jwt:Site"],
+                    RequireExpirationTime = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SigningKey"]))
                 };
+            });
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("Cors", options =>
+                {
+                    options.AllowAnyOrigin();
+                    options.AllowAnyMethod();
+                    options.AllowAnyHeader();
+                });
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -86,6 +97,12 @@ namespace OpenMyGarageApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
 
             app.UseAuthentication();
             app.UseMvc();
