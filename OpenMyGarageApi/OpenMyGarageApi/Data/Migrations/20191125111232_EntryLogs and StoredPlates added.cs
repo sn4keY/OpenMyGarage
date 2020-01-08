@@ -43,7 +43,7 @@ namespace OpenMyGarageApi.Data.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Plate = table.Column<string>(nullable: false),
-                    Time = table.Column<DateTime>(nullable: false),
+                    Time = table.Column<long>(nullable: false),
                     Outcome = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

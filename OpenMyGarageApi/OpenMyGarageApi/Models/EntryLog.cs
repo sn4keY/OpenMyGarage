@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace OpenMyGarageApi.Models
         public string Plate { get; set; }
 
         [Required]
+        [Column(TypeName = "bigint")]
         public long Time { get; set; }
 
         [Required]
