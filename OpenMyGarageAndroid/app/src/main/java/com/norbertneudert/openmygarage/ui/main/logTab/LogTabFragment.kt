@@ -53,7 +53,6 @@ class LogTabFragment : Fragment() {
     }
 
     private fun refreshDatabase() {
-        apiHandler.refreshDatabase()
-        binding.refreshLayout.isRefreshing = false
+        binding.refreshLayout.isRefreshing = apiHandler.refreshDatabase()
     }
 }
