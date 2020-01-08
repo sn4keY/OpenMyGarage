@@ -3,8 +3,6 @@ package com.norbertneudert.openmygarage.apiservice
 import android.util.Log
 import com.norbertneudert.openmygarage.database.EntryLog
 import com.norbertneudert.openmygarage.database.EntryLogDao
-import com.norbertneudert.openmygarage.database.StoredPlate
-import com.norbertneudert.openmygarage.database.StoredPlateDao
 import kotlinx.coroutines.*
 
 class ApiHandlerEntryLogs(private val entryLogsDB: EntryLogDao) {
@@ -12,27 +10,65 @@ class ApiHandlerEntryLogs(private val entryLogsDB: EntryLogDao) {
     private val coroutineScope = CoroutineScope(handlerJob + Dispatchers.Main)
 
     init {
+        onClear()
         refreshDatabase()
     }
 
-    fun refreshDatabase() {
+    fun refreshDatabase() : Boolean {
         coroutineScope.launch {
-            clearEntryLogs()
-            var getEntryLogsDeferred = OMGApi.retrofitService.getEntryLogs()
+            val getEntryLogsDeferred = OMGApi.retrofitService.getEntryLogs()
             try {
-                var listResult = getEntryLogsDeferred.await()
+                val listResult = getEntryLogsDeferred.await()
+                Log.i("ApiHandler", "refreshDatabase: listResult count: " + listResult.count())
                 populateEntryLogs(listResult)
             } catch (e: Exception) {
                 Log.i("ApiHandler", "Refresh entryLogs failed: " + e.message)
             }
         }
+        return false
     }
 
     private suspend fun populateEntryLogs(entryLogs: List<EntryLog>) {
-        for (log in entryLogs) {
-            withContext(Dispatchers.IO) {
-                entryLogsDB.insert(log)
+        if (isLogsUpdated(entryLogs)) {
+            val logList = getEntryLogs()
+            Log.i("ApiHandler", "populateEntryLogs: entryLogs in DB: " + logList?.count())
+            var index = if (logList?.count() != 0) { entryLogs.count() - (entryLogs.count() - logList!!.count())} else { 0 }
+            Log.i("ApiHandler", "populateEntryLogs: index: $index")
+            while (index < entryLogs.count()){
+                withContext(Dispatchers.IO) {
+                    entryLogsDB.insert(entryLogs[index])
+                }
+                index++
             }
+        }
+    }
+
+    private suspend fun getEntryLogs() : List<EntryLog>? {
+        return withContext(Dispatchers.IO) {
+            entryLogsDB.getEntryLogsList()
+        }
+    }
+
+    private suspend fun isLogsUpdated(entryLogs: List<EntryLog>) : Boolean {
+        val log = getLastEntryLog()
+        Log.i("ApiHandler", "isLogsUpdated: lastLog: " + log.toString())
+        if (log?.entryTime == entryLogs.last().entryTime) {
+            Log.i("ApiHandler", "isLogsUpdated: false")
+            return false
+        }
+        Log.i("ApiHandler", "isLogsUpdated: true")
+        return true
+    }
+
+    private suspend fun getLastEntryLog() : EntryLog? {
+        return withContext(Dispatchers.IO) {
+            entryLogsDB.getLastEntryLog()
+        }
+    }
+
+    fun onClear() {
+        coroutineScope.launch {
+            clearEntryLogs()
         }
     }
 
