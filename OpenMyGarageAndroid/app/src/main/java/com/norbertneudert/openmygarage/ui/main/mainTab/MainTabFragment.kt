@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-
 import com.norbertneudert.openmygarage.R
 import com.norbertneudert.openmygarage.apiservice.ApiHandlerEntryLogs
 import com.norbertneudert.openmygarage.database.OMGDatabase
@@ -59,8 +58,6 @@ class MainTabFragment : Fragment() {
     }
 
     private fun refreshDatabase() {
-        //apiHandler.onClear()
-        //apiHandler.refreshDatabase()
-        binding.swipeRefreshLayout.isRefreshing = false
+        binding.swipeRefreshLayout.isRefreshing = apiHandler.refreshDatabase()
     }
 }

@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-
 import com.norbertneudert.openmygarage.R
 import com.norbertneudert.openmygarage.apiservice.ApiHandlerStoredPlates
 import com.norbertneudert.openmygarage.database.OMGDatabase

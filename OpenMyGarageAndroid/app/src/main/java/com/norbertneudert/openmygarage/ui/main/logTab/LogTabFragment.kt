@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-
 import com.norbertneudert.openmygarage.R
 import com.norbertneudert.openmygarage.apiservice.ApiHandlerEntryLogs
 import com.norbertneudert.openmygarage.database.OMGDatabase

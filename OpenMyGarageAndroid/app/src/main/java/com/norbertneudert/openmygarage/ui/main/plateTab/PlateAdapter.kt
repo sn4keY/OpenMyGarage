@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.norbertneudert.openmygarage.apiservice.ApiHandlerStoredPlates
 import com.norbertneudert.openmygarage.database.StoredPlate
 import com.norbertneudert.openmygarage.databinding.PlatesItemViewBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 
 class PlateAdapter(val viewModel: PlateTabViewModel,private val supportFragmentManager: FragmentManager,private val parent: Fragment) : androidx.recyclerview.widget.ListAdapter<StoredPlate, PlateAdapter.ViewHolder>(PlateDiffCallback()) {
 

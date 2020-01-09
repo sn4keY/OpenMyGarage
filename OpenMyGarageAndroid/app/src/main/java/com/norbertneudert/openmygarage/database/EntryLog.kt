@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
-import java.util.*
 
 @Entity(tableName = "entry_log_table")
 data class EntryLog (

@@ -82,7 +82,7 @@ class ApiHandlerEntryLogs private constructor(private val entryLogsDB: EntryLogD
         }
     }
 
-    fun onClear() {
+    private fun onClear() {
         coroutineScope.launch {
             clearEntryLogs()
         }
