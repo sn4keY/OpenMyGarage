@@ -5,13 +5,29 @@ import com.norbertneudert.openmygarage.database.EntryLog
 import com.norbertneudert.openmygarage.database.EntryLogDao
 import kotlinx.coroutines.*
 
-class ApiHandlerEntryLogs(private val entryLogsDB: EntryLogDao) {
+class ApiHandlerEntryLogs private constructor(private val entryLogsDB: EntryLogDao) {
     private var handlerJob = Job()
     private val coroutineScope = CoroutineScope(handlerJob + Dispatchers.Main)
 
     init {
         onClear()
         refreshDatabase()
+    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: ApiHandlerEntryLogs? = null
+
+        fun getInstance(entryLogsDB: EntryLogDao) : ApiHandlerEntryLogs {
+            synchronized(this) {
+                var instance = INSTANCE
+                if (instance == null) {
+                    instance = ApiHandlerEntryLogs(entryLogsDB)
+                    INSTANCE = instance
+                }
+                return instance
+            }
+        }
     }
 
     fun refreshDatabase() : Boolean {

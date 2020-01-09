@@ -29,7 +29,7 @@ class LogTabFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val dataSource = OMGDatabase.getInstance(application).entryLog
-        apiHandler = ApiHandlerEntryLogs(dataSource)
+        apiHandler = ApiHandlerEntryLogs.getInstance(dataSource)
         val viewModelFactory = LogTabViewModelFactory(dataSource, application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LogTabViewModel::class.java)
 
