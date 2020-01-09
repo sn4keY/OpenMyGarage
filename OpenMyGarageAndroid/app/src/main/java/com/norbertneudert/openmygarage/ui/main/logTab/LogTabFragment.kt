@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-
 import com.norbertneudert.openmygarage.R
 import com.norbertneudert.openmygarage.apiservice.ApiHandlerEntryLogs
 import com.norbertneudert.openmygarage.database.OMGDatabase
@@ -29,7 +28,7 @@ class LogTabFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val dataSource = OMGDatabase.getInstance(application).entryLog
-        apiHandler = ApiHandlerEntryLogs(dataSource)
+        apiHandler = ApiHandlerEntryLogs.getInstance(dataSource)
         val viewModelFactory = LogTabViewModelFactory(dataSource, application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LogTabViewModel::class.java)
 
@@ -41,7 +40,7 @@ class LogTabFragment : Fragment() {
 
         viewModel.logs.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.data = it
+                adapter.submitList(it)
             }
         })
 

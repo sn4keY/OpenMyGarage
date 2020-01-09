@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-
 import com.norbertneudert.openmygarage.R
 import com.norbertneudert.openmygarage.apiservice.ApiHandlerEntryLogs
 import com.norbertneudert.openmygarage.database.OMGDatabase
@@ -31,7 +30,7 @@ class MainTabFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val dataSource = OMGDatabase.getInstance(application).entryLog
-        //apiHandler = ApiHandlerEntryLogs(dataSource)
+        apiHandler = ApiHandlerEntryLogs.getInstance(dataSource)
         val viewModelFactory = MainTabViewModelFactory(dataSource, application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainTabViewModel::class.java)
 
@@ -43,7 +42,7 @@ class MainTabFragment : Fragment() {
 
         viewModel.logs.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.data = it
+                adapter.submitList(it)
             }
         })
 
@@ -59,8 +58,6 @@ class MainTabFragment : Fragment() {
     }
 
     private fun refreshDatabase() {
-        //apiHandler.onClear()
-        //apiHandler.refreshDatabase()
-        binding.swipeRefreshLayout.isRefreshing = false
+        binding.swipeRefreshLayout.isRefreshing = apiHandler.refreshDatabase()
     }
 }
