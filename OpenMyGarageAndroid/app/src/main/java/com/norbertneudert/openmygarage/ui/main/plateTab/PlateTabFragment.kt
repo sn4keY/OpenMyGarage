@@ -39,7 +39,7 @@ class PlateTabFragment : Fragment(), EditPlateFragment.EditPlateDialogListener {
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
 
-        val adapter = PlateAdapter(viewModel, activity.supportFragmentManager, this)
+        val adapter = PlateAdapter(apiHandler, activity.supportFragmentManager, this)
         binding.plateList.adapter = adapter
 
         viewModel.plates.observe(viewLifecycleOwner, Observer {
