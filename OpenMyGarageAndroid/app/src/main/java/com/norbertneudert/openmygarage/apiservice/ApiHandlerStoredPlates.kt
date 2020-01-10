@@ -24,9 +24,9 @@ class ApiHandlerStoredPlates(private val storedplatesDB: StoredPlateDao) {
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 Log.i("ApiHandlerStoredPlates", response.message())
+                refreshDatabase()
             }
         })
-        refreshDatabase()
     }
 
     fun deleteStoredPlate(plate: String){
@@ -37,9 +37,9 @@ class ApiHandlerStoredPlates(private val storedplatesDB: StoredPlateDao) {
 
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 Log.i("ApiHandlerStoredPlates", response.message())
+                refreshDatabase()
             }
         })
-        refreshDatabase()
     }
 
     private fun refreshDatabase() {
