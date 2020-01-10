@@ -10,11 +10,11 @@ import com.norbertneudert.openmygarage.apiservice.ApiHandlerStoredPlates
 import com.norbertneudert.openmygarage.database.StoredPlate
 import com.norbertneudert.openmygarage.databinding.PlatesItemViewBinding
 
-class PlateAdapter(val viewModel: PlateTabViewModel,private val supportFragmentManager: FragmentManager,private val parent: Fragment) : androidx.recyclerview.widget.ListAdapter<StoredPlate, PlateAdapter.ViewHolder>(PlateDiffCallback()) {
+class PlateAdapter(val apiHandler: ApiHandlerStoredPlates,private val supportFragmentManager: FragmentManager,private val parent: Fragment) : androidx.recyclerview.widget.ListAdapter<StoredPlate, PlateAdapter.ViewHolder>(PlateDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, parent, supportFragmentManager, viewModel)
+        holder.bind(item, parent, supportFragmentManager, apiHandler)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,7 +23,7 @@ class PlateAdapter(val viewModel: PlateTabViewModel,private val supportFragmentM
 
     class ViewHolder private constructor(val binding: PlatesItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: StoredPlate, parent: Fragment, supportFragmentManager: FragmentManager, viewModel: PlateTabViewModel) {
+        fun bind(item: StoredPlate, parent: Fragment, supportFragmentManager: FragmentManager, apiHandler: ApiHandlerStoredPlates) {
             binding.namePlatesTw.text = item.name
             binding.platePlatesTw.text = item.plate
             binding.outcomePlatesTw.text = getOutcomeString(item.outcome)
@@ -33,7 +33,6 @@ class PlateAdapter(val viewModel: PlateTabViewModel,private val supportFragmentM
                 editor.show(supportFragmentManager, "dialog")
             }
             binding.deleteButton.setOnClickListener {
-                val apiHandler = ApiHandlerStoredPlates(viewModel.database)
                 apiHandler.deleteStoredPlate(item.plate)
             }
         }
