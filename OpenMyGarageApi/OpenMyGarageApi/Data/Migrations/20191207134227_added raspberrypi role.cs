@@ -7,11 +7,14 @@ namespace OpenMyGarageApi.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<long>(
+            migrationBuilder.DropColumn(
+                name: "Time",
+                table: "EntryLogs");
+
+            migrationBuilder.AddColumn<long>(
                 name: "Time",
                 table: "EntryLogs",
-                nullable: false,
-                oldClrType: typeof(DateTime));
+                nullable: false);
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",

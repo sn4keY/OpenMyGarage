@@ -2,7 +2,6 @@ package com.norbertneudert.openmygarage.ui.main.logTab
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.norbertneudert.openmygarage.database.EntryLog
 import com.norbertneudert.openmygarage.database.EntryLogDao
 import kotlinx.coroutines.*
 

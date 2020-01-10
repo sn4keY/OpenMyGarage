@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-
 import com.norbertneudert.openmygarage.R
 import com.norbertneudert.openmygarage.apiservice.ApiHandlerEntryLogs
 import com.norbertneudert.openmygarage.database.OMGDatabase
@@ -29,7 +29,7 @@ class LogTabFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val dataSource = OMGDatabase.getInstance(application).entryLog
-        apiHandler = ApiHandlerEntryLogs(dataSource)
+        apiHandler = ApiHandlerEntryLogs.getInstance(dataSource)
         val viewModelFactory = LogTabViewModelFactory(dataSource, application)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LogTabViewModel::class.java)
 
@@ -41,7 +41,7 @@ class LogTabFragment : Fragment() {
 
         viewModel.logs.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.data = it
+                adapter.submitList(it)
             }
         })
 
@@ -49,11 +49,37 @@ class LogTabFragment : Fragment() {
             refreshDatabase()
         }
 
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val logs = dataSource.getEntryLogsFromPlate(newText!!)
+                logs.observe(viewLifecycleOwner, Observer {
+                    it?.let {
+                        adapter.submitList(it)
+                    }
+                })
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+        })
+
+        binding.searchView.setOnCloseListener(object : SearchView.OnCloseListener {
+            override fun onClose(): Boolean {
+                viewModel.logs.observe(viewLifecycleOwner, Observer {
+                    it?.let {
+                        adapter.submitList(it)
+                    }
+                })
+                return false
+            }
+        })
+
         return binding.root
     }
 
     private fun refreshDatabase() {
-        apiHandler.refreshDatabase()
-        binding.refreshLayout.isRefreshing = false
+        binding.refreshLayout.isRefreshing = apiHandler.refreshDatabase()
     }
 }

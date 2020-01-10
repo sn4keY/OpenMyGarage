@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-
 import com.norbertneudert.openmygarage.R
 import com.norbertneudert.openmygarage.apiservice.ApiHandlerStoredPlates
 import com.norbertneudert.openmygarage.database.OMGDatabase
@@ -40,7 +39,7 @@ class PlateTabFragment : Fragment(), EditPlateFragment.EditPlateDialogListener {
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
 
-        val adapter = PlateAdapter(viewModel, activity.supportFragmentManager, this)
+        val adapter = PlateAdapter(apiHandler, activity.supportFragmentManager, this)
         binding.plateList.adapter = adapter
 
         viewModel.plates.observe(viewLifecycleOwner, Observer {
